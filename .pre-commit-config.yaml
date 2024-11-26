@@ -1,0 +1,48 @@
+# See https://pre-commit.com for more information
+
+files: .*\.py$
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: settings\.py
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+        files: ""
+      - id: debug-statements
+        files: .*\.py$
+      - id: mixed-line-ending
+        args:
+          - --fix=lf
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 24.8.0
+    hooks:
+      - id: black
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args:
+          - --profile
+          - black
+          - --filter-files
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.335
+    hooks:
+      - id: pyright
+        additional_dependencies:
+          - discord
+          - cachetools
+          - rich
+          - Pillow
+          - prometheus_client
+          - tortoise-orm
+          - git+https://github.com/fastapi-admin/fastapi-admin.git
+          - aerich==0.6.3
+          - redis
+  - repo: https://github.com/csachs/pyproject-flake8
+    rev: v7.0.0
+    hooks:
+      - id: pyproject-flake8
